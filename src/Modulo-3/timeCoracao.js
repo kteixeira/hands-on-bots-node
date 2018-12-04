@@ -26,17 +26,37 @@ const bot = new builder.UniversalBot(connector);
 //Bloco de Dialogs
 bot.dialog('/', [
     session => {
-        builder.Prompts.text(session, 'Qual é o seu nome?');
+        builder.Prompts.text(session, 'Oi! Qual é o seu nome?');
     },
 
     (session, results) => {
         let nome = results.response;
-        session.send(`Oi! ${nome}`);
+        session.send(`Oi ${nome}!`);
 
         session.beginDialog('/perguntarTimeCoracao')
     }
 ])
 
 bot.dialog('/perguntarTimeCoracao', [
-    session.Prompts.text(session, 'Qual é o seu time de futebol do coração?')
+    session =>  {
+        builder.Prompts.text(session, 'Qual é o seu time de futebol do coração?');
+    },
+
+    (session, results) => {
+        let timeCoracao = results.response;
+        session.endDialog(`Vamos torcer no Campeonato Brasileiro para o time ${timeCoracao} em 2018!`);
+    
+        session.beginDialog('/perguntarLugarPreferido')
+    }
+]); 
+
+bot.dialog('/perguntarLugarPreferido', [
+    session => {
+        builder.Prompts.text(session, 'Qual é o seu lugar preferido?');
+    },
+
+    (session, results) => {
+        let lugar = results.response;
+        session.endDialog(`Amamos **${lugar}**! É simplesmente uma cidade muito bonita!`)
+    }
 ])

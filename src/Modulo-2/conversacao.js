@@ -35,4 +35,4 @@ const bot = new builder.UniversalBot(connector, [
 ]);
 
 //Endpoint para executar as mensagens para o usuário
-server.post('/api/messages', connector.listen());
+server.post('/ api/messages', connector.listen());
